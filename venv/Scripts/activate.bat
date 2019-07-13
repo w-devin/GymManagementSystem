@@ -1,5 +1,5 @@
 @echo off
-set "VIRTUAL_ENV=D:\Backup\Desktop\Moresec\scripts\GymManagementSystem\venv"
+set "VIRTUAL_ENV=D:\Backup\Desktop\GymSystem\venv"
 
 if not defined PROMPT (
     set "PROMPT=$P$G"

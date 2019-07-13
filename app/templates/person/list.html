@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}GymManagementSystem - Persons{% endblock %}
+
+{% set identifies = {'admin':'管理员', 'vip':'会员', 'staff':'工作人员', 'coach':'教练', 'cleaners':'保洁人员'} %}
+
+{% block page_content %}
+
+<table class="table table-hover">
+    <caption>
+        <a href="{{ url_for('person.add_person') }}"><button type="button" class="btn btn-primary">add</button></a>
+    </caption>
+    <thead>
+        <tr>
+            <th>name</th>
+            <th>gender</th>
+            <th>age</th>
+            <th>phone</th>
+            <th>identify</th>
+            <th>manage</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for person in persons %}
+        <tr>
+            <td><a href="{{ url_for('person.get_person', phone=person.phone) }}">{{ person.name }}</a></td>
+            <td>{% if person.gender == 1 %}男{% else %}女{% endif %}</td>
+            <td>{{ person.age }}</td>
+            <td>{{ person.phone }}</td>
+            <td>{{ identifies[person.identify] }}</td>
+            <td><a href="{{ url_for('person.del_person', phone=person.phone) }}"><button type="button" class="bin btn-primary">delete</button></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

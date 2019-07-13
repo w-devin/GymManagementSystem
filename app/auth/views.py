@@ -1,9 +1,11 @@
+import sys
+
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 
 from . import auth
 from .. import db
-from ..models import Role
+from ..models import User
 from .forms import LoginForm, RegistrationForm
 
 
@@ -11,7 +13,7 @@ from .forms import LoginForm, RegistrationForm
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = Role.query.filter_by(phone=form.phone.data).first()
+        user = User.query.filter_by(phone=form.phone.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
             next = request.args.get('next')
@@ -34,11 +36,11 @@ def logout():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = Role(phone=form.phone.data,
+        user = User(phone=form.phone.data,
                     name=form.name.data,
-                    password_hash=form.password.data,
+                    password=form.password.data,
                     age=form.age.data,
-                    gender=form.age.data,
+                    gender=form.gender.data,
                     identify=form.identify.data,
                     reserved=form.identify.data
                     )
